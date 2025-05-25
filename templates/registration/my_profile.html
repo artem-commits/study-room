@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link href="{% static 'css/account_profile.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="account-profile">
+    <div class="account-profile__header">
+        <h2 class="account-profile__title">Личный кабинет</h2>
+    </div>
+
+    <div class="account-profile__content">
+        <form method="post" action="" class="account-profile__form" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="account-profile__avatar-section">
+                <div class="avatar-container">
+                    <img src="{{ user.get_avatar_url }}" alt="Profile Avatar" class="avatar-image">
+                    <div class="avatar-overlay">
+                        <label for="id_avatar" class="avatar-upload-btn">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="avatar-input">
+                    {{ form.avatar }}
+                </div>
+            </div>
+
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+
+            <div class="form-fields">
+                {% for f in form %}
+                    {% if f.name != 'avatar' %}
+                    <div class="form-field">
+                        <label for="{{ f.id_for_label }}" class="form-label">{{ f.label }}</label>
+                        <div class="form-input">
+                            {{ f }}
+                        </div>
+                        <div class="field-errors">
+                            {{ f.errors }}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-save"></i>
+                    Сохранить
+                </button>
+                <a href="{% url 'accounts:password_change' %}" class="change-password-button">
+                    <i class="fas fa-key"></i>
+                    Сменить пароль
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

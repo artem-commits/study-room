@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/pages/room.css' %}">
+{% endblock %}
+
+{% block header_title %}{{ room.name }}{% endblock %}
+
+{% block content %}
+<div class="room-container">
+    <div>
+        <div class="room-header">
+            <h2 class="room-title">{{ room.name }}</h2>
+            {% if request.user == room.host %}
+            <div class="room-actions">
+                <a href="{% url 'update_room' room.id %}" class="edit-link">Изменить комнату</a>
+                <a href="{% url 'delete_room' room.id %}" class="delete-link">Удалить комнату</a>
+            </div>
+            {% endif %}
+        </div>
+        <p class="room-description">{{ room.description }}</p>
+
+        <div class="comment-wrapper">
+            <h3>Диалог</h3>
+            {% for message in room_messages %}
+            <div class="comment">
+                <div class="comment-header">
+                    <span class="comment-user">@{{ message.user }}</span>
+                    <span class="comment-time">{{ message.created_at|timesince }}</span>
+                </div>
+                <p class="comment-body">{{ message.body }}</p>
+                {% if request.user == message.user %}
+                <a href="{% url 'delete_message' message.id %}" class="delete-link">Удалить</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="comment-form">
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type="text" name="body" placeholder="Напишите свое сообщение здесь...">
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="comment-form">
+            <p>Войдите, чтобы оставить комментарий.</p>
+        </div>
+        {% endif %}
+    </div>
+    <div>
+        <div class="participants-section">
+            <h3>Участники комнаты</h3>
+            {% for user in participants %}
+            <div class="participant">
+                <img src="{{ user.get_avatar_url }}" class="participant-avatar" alt="avatar">
+                <span class="participant-name">@{{ user.username }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="activity-section">
+            <h3 class="activity-title">Недавние активности</h3>
+            {% for message in room_messages %}
+            <div class="activity-item">
+                <div class="activity-header">
+                    <span class="activity-user">@{{ message.user }}</span>
+                    <span class="activity-time">{{ message.created_at|timesince }} назад</span>
+                </div>
+                <p class="activity-message">{{ message }}</p>
+                {% if request.user == message.user %}
+                <a href="{% url 'delete_message' message.id %}" class="delete-link">Удалить</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

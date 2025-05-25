@@ -1,0 +1,11 @@
+# PyCharm project files
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# Python
+__pycache__/
+venv/
+.env

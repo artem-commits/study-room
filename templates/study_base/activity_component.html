@@ -1,0 +1,17 @@
+{% load static %}
+<div class="activity-container">
+    <h3 class="activity-title">Недавние активности</h3>
+    {% for message in room_messages %}
+    <div class="activity-item">
+        <div class="activity-header">
+            <a href="{% url 'user_profile' message.user.id %}"><span class="activity-user">@{{ message.user }}</span></a>
+            <span class="activity-time">{{ message.created_at|timesince }} назад</span>
+        </div>
+        <p class="activity-message">{{ message }}</p>
+        {% if request.user == message.user %}
+        <br>
+        <a href="{% url 'delete_message' message.id %}" class="delete-link">Удалить</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

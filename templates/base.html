@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}StudyRoom{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body>
+
+<div class="container">
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <br>
+        <a href="{% url 'homepage' %}"><h1>StudyRoom</h1></a>
+        <a href="{% url 'about' %}" class="about-link">О сайте</a>
+        <nav>
+            {% block sidebar-topics %}
+            {% endblock %}
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main" id="main">
+        <!-- Header -->
+        <header>
+            <h2>{% block header_title %}Добро пожаловать в StudyRoom{% endblock %}</h2>
+            <div class="user-menu">
+                {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}"><span>{{ user.username }}</span></a>
+                <a href="{% url 'accounts:logout' %}">Выйти</a>
+                {% else %}
+                <a href="{% url 'accounts:login' %}">Войти</a>
+                <a href="{% url 'accounts:signup' %}">Регистрация</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Dynamic page content -->
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            © {{ year|default:"2025" }} StudyRoom. Все права защищены.
+        </footer>
+    </div>
+</div>
+<script defer src="{% static 'js/modules/sidebar.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/pages/room.css' %}">
+{% endblock %}
+
+{% block header_title %}
+    {% if form.instance.pk %}
+        Изменение комнаты
+    {% else %}
+        Создание комнаты
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Комната</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="field-errors">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="form-button">
+            {% if form.instance.pk %}
+                Сохранить изменения
+            {% else %}
+                Создать комнату
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <div class="auth-container">
+        <h2>Авторизация</h2>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            {% for f in form %}
+            <div class="form-group">
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }}
+                <div class="form-error">{{ f.errors }}</div>
+            </div>
+            {% endfor %}
+            <div class="form-group submit-container">
+                <button type="submit" class="submit-btn">Войти</button>
+            </div>
+        </form>
+        <div class="extra-container">
+            <a href="{% url 'accounts:signup' %}">
+                <button class="create-btn">Создать аккаунт</button>
+            </a>
+            <a href="{% url 'accounts:password_reset' %}">
+                <button class="reset-btn">Сбросить пароль</button>
+            </a>
+            <a href="{% url 'social:begin' 'github' %}">
+                <button class="reset-btn">Войти с GitHub</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

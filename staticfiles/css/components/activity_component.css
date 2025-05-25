@@ -1,0 +1,47 @@
+.activity-container {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+    .activity-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a2a3a;
+        margin-bottom: 16px;
+    }
+    .activity-item {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .activity-user {
+        font-weight: 600;
+        color: #0077ff;
+    }
+    .activity-time {
+        color: #718096;
+        font-size: 14px;
+    }
+    .activity-message {
+        font-size: 16px;
+        color: #2d3748;
+        line-height: 1.5;
+    }
+    .delete-link {
+        background: #ff6b6b;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .delete-link:hover {
+        background: #ff5252;
+    }

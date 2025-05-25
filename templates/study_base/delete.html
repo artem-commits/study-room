@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/components/delete.css' %}">
+{% endblock %}
+
+{% block header_title %}Подтверждение удаления{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <h2 class="delete-title">Подтверждение удаления</h2>
+    <p class="delete-message">Вы уверены, что хотите удалить "{{ object }}"?</p>
+    <div class="delete-actions">
+        <a href="{{ request.META.HTTP_REFERER }}" class="cancel-link">Вернуться назад</a>
+        <form method="post" action="" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Да, подтверждаю!</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

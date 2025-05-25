@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link href="{% static 'css/components/activity_component.css' %}" rel="stylesheet">
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/pages/profile.css' %}">
+{% endblock %}
+
+{% block header_title %}Профиль пользователя {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-header">
+        <div class="profile-header-content">
+            <div class="profile-avatar-container">
+                <img src="{{ user.get_avatar_url }}" alt="Profile Avatar" class="profile-avatar">
+                {% if user == request.user %}
+                <div class="profile-avatar-overlay">
+                    <a href="{% url 'accounts:profile' %}" class="edit-profile-btn">
+                        <i class="fas fa-camera"></i>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <h2 class="profile-username">{{ user.username }}</h2>
+                {% if user.birth_date %}
+                <p class="profile-birth-date">
+                    <i class="fas fa-birthday-cake"></i>
+                    {{ user.birth_date|date:"F j, Y" }}
+                </p>
+                {% endif %}
+                <p class="profile-join-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    Joined {{ user.date_joined|date:"F Y" }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value">{{ user.room_set.count }}</span>
+                    <span class="stat-label">Rooms Created</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">{{ user.participants.count }}</span>
+                    <span class="stat-label">Rooms Joined</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">{{ user.message_set.count }}</span>
+                    <span class="stat-label">Messages</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-main">
+            {% include 'study_base/feed_component.html' %}
+        </div>
+
+        <div class="profile-sidebar">
+            {% include 'study_base/activity_component.html' %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

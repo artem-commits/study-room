@@ -1,0 +1,49 @@
+ .delete-container {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .delete-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a2a3a;
+        margin-bottom: 16px;
+    }
+    .delete-message {
+        font-size: 16px;
+        color: #4a5568;
+        margin-bottom: 24px;
+    }
+    .delete-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+    }
+    .delete-button {
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .delete-button:hover {
+        background: #ff5252;
+    }
+    .cancel-link {
+        background: #e2e8f0;
+        color: #4a5568;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .cancel-link:hover {
+        background: #cbd5e0;
+    }
